@@ -9,6 +9,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   TextEditingController _cpfController = TextEditingController();
+  TextEditingController _cnpjController = TextEditingController();
+
   String _valorRecuperado = "";
 
   @override
@@ -30,11 +32,25 @@ class _HomeState extends State<Home> {
               hintText: "Digite CPF"
             ),
           ),
+
+          // CNPJ
+            TextFormField(
+              controller: _cnpjController,
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                WhitelistingTextInputFormatter.digitsOnly,
+                CnpjInputFormatter()
+              ],
+              decoration: InputDecoration(
+                hintText: "Digite o CNPJ"
+              ),
+            ),
           RaisedButton(
             child: Text("Recuperar Valor"),
             onPressed: (){
               setState(() {
                 _valorRecuperado = _cpfController.text.toString();
+                _valorRecuperado = _cnpjController.text.toString();
               });
             },
           ),
