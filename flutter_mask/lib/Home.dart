@@ -11,7 +11,7 @@ class _HomeState extends State<Home> {
   TextEditingController _cpfController = TextEditingController();
   TextEditingController _cnpjController = TextEditingController();
   TextEditingController _cepController = TextEditingController();
-  TextEditingController _valorController = TextEditingController();
+  TextEditingController _moedaController = TextEditingController();
   TextEditingController _pesoController = TextEditingController();
   TextEditingController _telefoneController = TextEditingController();
   TextEditingController _dataController = TextEditingController();
@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
             ),
             // MOEDA
             TextFormField(
-              controller: _valorController,
+              controller: _moedaController,
               keyboardType: TextInputType.number,
               inputFormatters: [
                 WhitelistingTextInputFormatter.digitsOnly,
@@ -124,14 +124,24 @@ class _HomeState extends State<Home> {
               color: Color(0xfffff200),
             onPressed: (){
               setState(() {
-                _valorRecuperado = _cpfController.text.toString();
-                _valorRecuperado = _cnpjController.text.toString();
-                _valorRecuperado = _cepController.text.toString();
-                _valorRecuperado = _valorController.text.toString();
-                _valorRecuperado = _pesoController.text.toString();
-                _valorRecuperado = _telefoneController.text.toString();
-                _valorRecuperado = _dataController.text.toString();
-                _valorRecuperado = _horaController.text.toString();
+                // _valorRecuperado = _cpfController.text.toString();
+                // _valorRecuperado = _cnpjController.text.toString();
+                // _valorRecuperado = _cepController.text.toString();
+                // _valorRecuperado = _moedaController.text.toString();
+                String moedaDB = _moedaController.text.toString();
+                moedaDB = moedaDB.replaceAll(".", "");
+                moedaDB = moedaDB.replaceAll(",", ".");
+                // _valorRecuperado = moedaDB;
+                double valorDouble = double.parse(moedaDB);
+
+                var formatador = NumberFormat("#,##0.00", "pt_BR");
+                var resultado = formatador.format(valorDouble);
+                _valorRecuperado = "DB ${moedaDB} / Exibição: ${resultado}";
+
+                // _valorRecuperado = _pesoController.text.toString();
+                // _valorRecuperado = _telefoneController.text.toString();
+                // _valorRecuperado = _dataController.text.toString();
+                // _valorRecuperado = _horaController.text.toString();
               });
             },
           ),
