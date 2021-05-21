@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'Formulario.dart';
 import 'Home.dart';
 
 final ThemeData temaDefault = ThemeData(
@@ -9,7 +10,8 @@ final ThemeData temaDefault = ThemeData(
 
 void main() => runApp(MaterialApp(
     title: "Tipos de Mascaras e validações",
-    home: Home(),
+    //home: Home(),
+    home: Formulario(),
     theme: temaDefault,
     debugShowCheckedModeBanner: false,
   ));
