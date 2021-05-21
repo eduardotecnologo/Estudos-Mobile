@@ -1,6 +1,7 @@
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,23 +12,23 @@ class _HomeState extends State<Home> {
   TextEditingController _cpfController = TextEditingController();
   TextEditingController _cnpjController = TextEditingController();
   TextEditingController _cepController = TextEditingController();
-  TextEditingController _moedaController = TextEditingController();
-  TextEditingController _pesoController = TextEditingController();
-  TextEditingController _telefoneController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   TextEditingController _dataController = TextEditingController();
-  TextEditingController _horaController = TextEditingController();
+  TextEditingController _moedaController = TextEditingController();
 
   String _valorRecuperado = "";
 
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Tipos de Mscaras e Validações"),),
+      appBar: AppBar(title: Text("Máscaras e Validações"),
+      ),
       body: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(children: <Widget>[
           // CPF
-          TextFormField(
+          TextField(
             controller: _cpfController,
             keyboardType: TextInputType.number,
             inputFormatters: [
@@ -40,118 +41,100 @@ class _HomeState extends State<Home> {
           ),
 
           // CNPJ
-            TextFormField(
-              controller: _cnpjController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
-                CnpjInputFormatter()
-              ],
-              decoration: InputDecoration(
-                hintText: "Digite o CNPJ"
+              TextField(
+                controller: _cnpjController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  CnpjInputFormatter()
+                ],
+                decoration: InputDecoration(hintText: "Digite o CNPJ"),
               ),
-            ),
-            // CEP
-            TextFormField(
-              controller: _cepController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
-                CepInputFormatter()
-              ],
-              decoration: InputDecoration(hintText: "Digite o CEP"),
-            ),
-            // MOEDA
-            TextFormField(
-              controller: _moedaController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
 
-                RealInputFormatter(centavos: true)
-              ],
-              decoration: InputDecoration(hintText: "Digite o Valor em Real"),
-            ),
-            // Peso
-            TextFormField(
-              controller: _pesoController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
-                PesoInputFormatter()
-              ],
-              decoration: InputDecoration(hintText: "Digite o Peso"),
-            ),
-            // Telefone
-            TextFormField(
-              controller: _telefoneController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
-                TelefoneInputFormatter()
-              ],
-              decoration:
-                  InputDecoration(hintText: "Digite o Telefone"),
-            ),
-            // Data
-            TextFormField(
-              controller: _dataController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
-                DataInputFormatter()
-              ],
-              decoration: InputDecoration(hintText: "Digite a Data"),
-            ),
-            // Hora
-            TextFormField(
-              controller: _horaController,
-              keyboardType: TextInputType.number,
-              inputFormatters: [
-                WhitelistingTextInputFormatter.digitsOnly,
-                HoraInputFormatter()
-              ],
-              decoration: InputDecoration(hintText: "Digite a Hora"),
-            ),
-          RaisedButton(
-            child: Text(
-              "Recuperar Valor",
-              style: TextStyle(
-                color: Colors.blue.shade900,
-                fontSize: 20
-                ),
+              // CEP
+              TextField(
+                controller: _cepController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  CepInputFormatter()
+                ],
+                decoration: InputDecoration(hintText: "Digite o CEP"),
               ),
-              color: Color(0xfffff200),
-            onPressed: (){
-              setState(() {
-                // _valorRecuperado = _cpfController.text.toString();
-                // _valorRecuperado = _cnpjController.text.toString();
-                // _valorRecuperado = _cepController.text.toString();
-                // _valorRecuperado = _moedaController.text.toString();
-                String moedaDB = _moedaController.text.toString();
-                moedaDB = moedaDB.replaceAll(".", "");
-                moedaDB = moedaDB.replaceAll(",", ".");
-                // _valorRecuperado = moedaDB;
-                double valorDouble = double.parse(moedaDB);
 
-                var formatador = NumberFormat("#,##0.00", "pt_BR");
-                var resultado = formatador.format(valorDouble);
-                _valorRecuperado = "DB ${moedaDB} / Exibição: ${resultado}";
+               // TELEFONE
+              TextField(
+                controller: _phoneController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  TelefoneInputFormatter()
+                ],
+                decoration: InputDecoration(hintText: "Digite o Celular"),
+              ),
 
-                // _valorRecuperado = _pesoController.text.toString();
-                // _valorRecuperado = _telefoneController.text.toString();
-                // _valorRecuperado = _dataController.text.toString();
-                // _valorRecuperado = _horaController.text.toString();
-              });
-            },
+              // DATA
+              TextField(
+                controller: _dataController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  DataInputFormatter()
+                ],
+                decoration: InputDecoration(hintText: "Digite o Celular"),
+              ),
+
+              // Moeda
+              TextField(
+                controller: _moedaController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  WhitelistingTextInputFormatter.digitsOnly,
+                  RealInputFormatter(centavos: true)
+                ],
+                decoration: InputDecoration(hintText: "Digite o Celular"),
+              ),
+        ElevatedButton(
+          child: Text("Recuperar valor"),
+          onPressed: (){
+            setState(() {
+              _valorRecuperado = _cpfController.text.toString();
+              //_valorRecuperado = _cnpjController.text.toString();
+              //_valorRecuperado = _cepController.text.toString();
+              //_valorRecuperado = _phoneController.text.toString();
+              //_valorRecuperado = _dataController.text.toString();
+              //_valorRecuperado = _moedaController.text.toString();
+
+              /* Preparando para salvar
+              String moedaDB = _moedaController.text.toString();
+              moedaDB = moedaDB.replaceAll(".", "");
+              moedaDB = moedaDB.replaceAll(",", ".");
+
+              //Exibindo:
+              //_valorRecuperado = moedaDB;
+              double valorDouble = double.parse(moedaDB);
+              var formatador = NumberFormat("#,##0.00", "pt_BR");
+              var resultado = formatador.format( valorDouble );
+
+              //_valorRecuperado = resultado;
+              //_valorRecuperado = "DB: ${ moedaDB } / Exibição: ${ resultado }";
+              // Padrões
+              //for ( var item in Estados.listaEstados){
+              for ( var item in Estados.listaEstadosSigla){
+                print("item: ${item}");
+              }
+            */
+            });
+          },
           ),
-          Text(
-            "Valor: ${_valorRecuperado}",
-            style: TextStyle(
-              fontSize: 25
-            ),
+        Text(
+          "Valor: ${_valorRecuperado}",
+          style: TextStyle(
+            fontSize:25
           )
-        ],),
+        )
+        ],
+        )
       ),
     );
   }
